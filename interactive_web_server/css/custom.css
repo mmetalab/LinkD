@@ -1,0 +1,139 @@
+/* Custom CSS for LinkD Drug Discovery Agent -- Modern Nature Journal Style */
+
+/* Global Arial font */
+* {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+.gradio-container {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+    max-width: 1400px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+    font-weight: 600;
+}
+
+input[type="text"],
+textarea,
+.gradio-textbox textarea,
+.gradio-textbox input {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+button,
+.gradio-button {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+    font-weight: 500;
+}
+
+label,
+.gradio-label {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+    font-weight: 500;
+}
+
+.gradio-markdown,
+.gradio-markdown p,
+.gradio-markdown li {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+    line-height: 1.6;
+}
+
+.gradio-html {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+/* Top-level tab styling -- prominent */
+.gradio-tabs > .tab-nav {
+    border-bottom: 2px solid #2171B5;
+}
+
+.gradio-tabs > .tab-nav button {
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 12px 24px;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+}
+
+.gradio-tabs > .tab-nav button.selected {
+    border-bottom: 3px solid #2171B5;
+    color: #2171B5;
+}
+
+/* Sub-tab styling -- lighter */
+.gradio-tabs .gradio-tabs .tab-nav {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.gradio-tabs .gradio-tabs .tab-nav button {
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 8px 18px;
+}
+
+.gradio-tabs .gradio-tabs .tab-nav button.selected {
+    border-bottom: 2px solid #2171B5;
+    color: #2171B5;
+}
+
+/* Plot containers -- clean with shadow */
+.gradio-plot {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 4px;
+    margin: 8px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s;
+}
+
+.gradio-plot:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Button hover */
+button:hover {
+    transition: all 0.2s ease;
+}
+
+/* Download button row styling */
+button[size="sm"] {
+    font-size: 0.82rem !important;
+}
+
+/* Cards get shadow on hover */
+.gradio-html div[style*="border-left: 3px"] {
+    transition: box-shadow 0.2s;
+}
+
+.gradio-html div[style*="border-left: 3px"]:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Scrollable table containers */
+.gradio-html div[style*="overflow-y: auto"] {
+    scrollbar-width: thin;
+    scrollbar-color: #c0c0c0 transparent;
+}
+
+.gradio-html div[style*="overflow-y: auto"]::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.gradio-html div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 3px;
+}
+
+/* Links in tables */
+.gradio-html a {
+    text-decoration: none;
+}
+
+.gradio-html a:hover {
+    text-decoration: underline;
+}

@@ -1,8 +1,8 @@
 #!/bin/bash
-# Prepare data archives for Figshare upload.
+# Prepare data archives for Zenodo upload.
 # Run from project root: bash scripts/prepare_figshare.sh
 #
-# Figshare free tier limit: 5 GB per file, 20 GB total per public dataset.
+# Zenodo free tier limit: 5 GB per file, 20 GB total per public dataset.
 # DrugTargetMetrics parquets (~13 GB) split into 10 parts of 10 files each (~1.3 GB per zip).
 #
 # Total output: 15 zip files (~16 GB)
@@ -14,8 +14,8 @@ OUT="figshare_upload"
 mkdir -p "$OUT"
 
 echo "============================================"
-echo "  LinkD: Preparing Figshare Data Archives"
-echo "  Figshare limit: 5 GB per file"
+echo "  LinkD: Preparing Zenodo Data Archives"
+echo "  Zenodo limit: 5 GB per file"
 echo "============================================"
 echo ""
 
@@ -78,7 +78,7 @@ echo ""
 echo "============================================"
 echo "  Next steps:"
 echo "============================================"
-echo "  1. Go to https://figshare.com → 'Create a new item'"
+echo "  1. Go to https://zenodo.org → 'Create a new item'"
 echo "  2. Title: 'LinkD: Drug-Target-Disease Multi-Evidence Database'"
 echo "  3. Category: Bioinformatics"
 echo "  4. License: CC BY 4.0"

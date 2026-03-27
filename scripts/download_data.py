@@ -1,5 +1,5 @@
 """
-Download LinkD Agent data from Figshare.
+Download LinkD data from Zenodo.
 
 Usage:
     python scripts/download_data.py
@@ -14,23 +14,22 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-# Configuration — update after Figshare publication
-FIGSHARE_ARTICLE_ID = "XXXXXXX"  # TODO: Replace with actual Figshare article ID
-FIGSHARE_VERSION = 1
+# Configuration — update after Zenodo publication
+ZENODO_RECORD_ID = "XXXXXXX"  # TODO: Replace with actual Zenodo record ID
 
-# Individual file downloads (update with actual file IDs after upload)
-FIGSHARE_FILES = {
-    # "filename.zip": "https://figshare.com/ndownloader/files/FILE_ID"
-    # Uncomment and fill after Figshare upload:
-    # "Database.zip": "https://figshare.com/ndownloader/files/XXXXXX",
-    # "EHR_Results.zip": "https://figshare.com/ndownloader/files/XXXXXX",
-    # "DrugResponse.zip": "https://figshare.com/ndownloader/files/XXXXXX",
-    # "DrugTargetMetrics.zip": "https://figshare.com/ndownloader/files/XXXXXX",
-    # "Target_Disease_Association.zip": "https://figshare.com/ndownloader/files/XXXXXX",
+# Individual file downloads (update with actual URLs after upload)
+# Format: "filename.zip": "https://zenodo.org/records/RECORD_ID/files/filename.zip?download=1"
+ZENODO_FILES = {
+    # Uncomment and fill after Zenodo upload:
+    # "Database.zip": "https://zenodo.org/records/XXXXXXX/files/Database.zip?download=1",
+    # "EHR_Results.zip": "https://zenodo.org/records/XXXXXXX/files/EHR_Results.zip?download=1",
+    # "DrugResponse.zip": "https://zenodo.org/records/XXXXXXX/files/DrugResponse.zip?download=1",
+    # "Target_Disease_Association.zip": "https://zenodo.org/records/XXXXXXX/files/Target_Disease_Association.zip?download=1",
+    # "DrugTargetMetrics_csvs.zip": "https://zenodo.org/records/XXXXXXX/files/DrugTargetMetrics_csvs.zip?download=1",
+    # "DrugTargetMetrics_parquet_part1.zip": "https://zenodo.org/records/XXXXXXX/files/DrugTargetMetrics_parquet_part1.zip?download=1",
+    # "DrugTargetMetrics_parquet_part2.zip": "https://zenodo.org/records/XXXXXXX/files/DrugTargetMetrics_parquet_part2.zip?download=1",
+    # ... (parts 3-10)
 }
-
-# Alternative: download entire article as zip
-FIGSHARE_ARTICLE_URL = f"https://figshare.com/ndownloader/articles/{FIGSHARE_ARTICLE_ID}/versions/{FIGSHARE_VERSION}"
 
 
 def download_file(url: str, dest: str):
@@ -64,38 +63,33 @@ def main():
     if existing:
         print(f"Found {len(existing)}/{len(required_dirs)} directories. Downloading missing data...")
     else:
-        print(f"No data found in {data_dir}. Downloading from Figshare...")
+        print(f"No data found in {data_dir}. Downloading from Zenodo...")
 
     os.makedirs(data_dir, exist_ok=True)
 
-    if FIGSHARE_ARTICLE_ID == "XXXXXXX":
+    if ZENODO_RECORD_ID == "XXXXXXX":
         print("\n" + "=" * 60)
-        print("  Figshare article ID not configured yet!")
+        print("  Zenodo record ID not configured yet!")
         print("  To set up:")
-        print("  1. Upload data to Figshare")
-        print("  2. Update FIGSHARE_ARTICLE_ID in this script")
-        print("  3. Or set FIGSHARE_FILES with individual file URLs")
+        print("  1. Upload data to Zenodo")
+        print("  2. Update ZENODO_RECORD_ID in this script")
+        print("  3. Uncomment ZENODO_FILES with download URLs")
         print("")
         print("  For local development, place data directories in:")
         print(f"  {data_dir.resolve()}/")
         print("=" * 60)
         return
 
-    # Download individual files if configured
-    if FIGSHARE_FILES:
-        for filename, url in FIGSHARE_FILES.items():
-            zip_path = str(data_dir / filename)
-            if not Path(zip_path).exists():
-                download_file(url, zip_path)
-                print(f"  Extracting {filename}...")
-                with zipfile.ZipFile(zip_path, "r") as z:
-                    z.extractall(str(data_dir))
-                os.remove(zip_path)
-    else:
-        # Download entire article
-        zip_path = str(data_dir / "linkd_data.zip")
-        download_file(FIGSHARE_ARTICLE_URL, zip_path)
-        print("  Extracting archive...")
+    if not ZENODO_FILES:
+        print("No Zenodo file URLs configured. Update ZENODO_FILES dict.")
+        return
+
+    # Download and extract each file
+    for filename, url in ZENODO_FILES.items():
+        zip_path = str(data_dir / filename)
+        if not Path(zip_path).exists():
+            download_file(url, zip_path)
+        print(f"  Extracting {filename}...")
         with zipfile.ZipFile(zip_path, "r") as z:
             z.extractall(str(data_dir))
         os.remove(zip_path)

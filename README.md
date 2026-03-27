@@ -6,7 +6,7 @@ LinkD is an integrated platform that combines drug-target interaction binding af
 
 > **URL**: [https://linkd-agent.onrender.com](https://linkd-agent.onrender.com) *(available after deployment)*
 >
-> **Data**: [Figshare DOI: TBD](https://figshare.com) (~16 GB)
+> **Data**: [Zenodo DOI: TBD](https://zenodo.org) (~16 GB)
 
 ## Modules
 
@@ -46,13 +46,13 @@ Other modes:
 
 ## Data
 
-### Download from Figshare
+### Download from Zenodo
 
 ```bash
 # Auto-download (used by Render during build)
 python scripts/download_data.py
 
-# Or manually download from Figshare and extract to project root:
+# Or manually download from Zenodo and extract to project root:
 # Database/, DrugTargetMetrics/, EHR_Results/, DrugResponse/, Target_Disease_Association/
 ```
 
@@ -90,23 +90,27 @@ python scripts/download_data.py
    - `DATABASE_DIR` = `/opt/render/project/src/data`
    - `GEMINI_FREE_KEY` = your free Gemini API key (for LinkD-Agent free mode)
    - Optional: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`
-4. Deploy — first build downloads data from Figshare (~10 min)
+4. Deploy — first build downloads data from Zenodo (~10 min)
 
 **Cost**: $11/mo (Render Starter $7 + 20GB disk $4)
 
-### Figshare (data hosting)
+### Zenodo (data hosting)
 
-1. Zip each data directory:
+1. Prepare zip archives:
    ```bash
-   zip -r Database.zip Database/
-   zip -r EHR_Results.zip EHR_Results/
-   zip -r DrugResponse.zip DrugResponse/
-   zip -r DrugTargetMetrics.zip DrugTargetMetrics/ -x "*.pt"
-   zip -r Target_Disease_Association.zip Target_Disease_Association/
+   bash scripts/prepare_figshare.sh
+   # Creates 15 zip files in figshare_upload/ (~1.3 GB each max)
    ```
-2. Upload to Figshare → publish → get DOI
-3. Update `scripts/download_data.py` with Figshare file URLs
-4. Update this README with DOI
+2. Go to https://zenodo.org → New Upload
+3. Upload all zip files from `figshare_upload/`
+   - Zenodo allows up to 50 GB per record (no per-file limit issue)
+4. Fill metadata:
+   - **Title**: LinkD: Drug-Target-Disease Multi-Evidence Database
+   - **License**: CC BY 4.0
+   - **Type**: Dataset
+5. Publish → copy DOI
+6. Update `scripts/download_data.py` with Zenodo file URLs
+7. Update this README with DOI
 
 ## Architecture
 
@@ -137,7 +141,7 @@ python scripts/download_data.py
                │
 ┌──────────────┴──────────────────────┐
 │  CSV / Parquet data (indexed)       │
-│  Figshare hosted (~16 GB)           │
+│  Zenodo hosted (~16 GB)           │
 └─────────────────────────────────────┘
 ```
 
@@ -167,7 +171,7 @@ LinkD_Agent/
 │   └── app.py                      # Legacy Gradio fallback
 │
 ├── scripts/
-│   └── download_data.py            # Figshare data download
+│   └── download_data.py            # Zenodo data download
 ├── notebooks/                      # Jupyter exploration notebooks
 ├── render.yaml                     # Render deployment config
 ├── requirements.txt

@@ -24,6 +24,10 @@ from agent import load_database, LLMPlanningAgent, LLMClient, PROVIDERS
 print("Loading database...")
 # DATABASE_DIR env var allows overriding the data location (e.g., on Render with persistent disk)
 _db_dir = os.getenv("DATABASE_DIR", str(project_root / "Database"))
+print(f"DATABASE_DIR = {_db_dir}")
+print(f"  exists: {Path(_db_dir).exists()}")
+print(f"  parent: {Path(_db_dir).parent}")
+print(f"  parent contents: {list(Path(_db_dir).parent.iterdir()) if Path(_db_dir).parent.exists() else 'NOT FOUND'}")
 # load_full_data=False samples large files (>200MB) to 100K rows for fast startup
 db = load_database(_db_dir, load_full_data=False)
 print(f"Database loaded: {len(db.dfs)} datasets")

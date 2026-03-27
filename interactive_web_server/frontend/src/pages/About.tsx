@@ -85,8 +85,9 @@ export default function About() {
 
       {/* Citation */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm mb-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Citation</h3>
-        <p className="text-sm text-gray-600 italic">Citation information will be available upon publication.</p>
+        <h3 className="text-lg font-bold text-gray-800 mb-3">Citation & Data</h3>
+        <p className="text-sm text-gray-600 mb-2 italic">Citation information will be available upon publication.</p>
+        <p className="text-sm text-gray-600"><strong>Data:</strong> <a href="https://doi.org/10.5281/zenodo.19241152" target="_blank" rel="noopener noreferrer" className="text-[#2171B5] hover:underline">doi.org/10.5281/zenodo.19241152</a> (Zenodo, ~16 GB)</p>
       </div>
 
       {/* Contact & Support */}

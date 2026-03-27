@@ -15,20 +15,26 @@ import zipfile
 from pathlib import Path
 
 # Configuration — update after Zenodo publication
-ZENODO_RECORD_ID = "XXXXXXX"  # TODO: Replace with actual Zenodo record ID
+ZENODO_RECORD_ID = "19241152"
 
-# Individual file downloads (update with actual URLs after upload)
-# Format: "filename.zip": "https://zenodo.org/records/RECORD_ID/files/filename.zip?download=1"
+# Individual file downloads from Zenodo
+_BASE = f"https://zenodo.org/records/{ZENODO_RECORD_ID}/files"
 ZENODO_FILES = {
-    # Uncomment and fill after Zenodo upload:
-    # "Database.zip": "https://zenodo.org/records/XXXXXXX/files/Database.zip?download=1",
-    # "EHR_Results.zip": "https://zenodo.org/records/XXXXXXX/files/EHR_Results.zip?download=1",
-    # "DrugResponse.zip": "https://zenodo.org/records/XXXXXXX/files/DrugResponse.zip?download=1",
-    # "Target_Disease_Association.zip": "https://zenodo.org/records/XXXXXXX/files/Target_Disease_Association.zip?download=1",
-    # "DrugTargetMetrics_csvs.zip": "https://zenodo.org/records/XXXXXXX/files/DrugTargetMetrics_csvs.zip?download=1",
-    # "DrugTargetMetrics_parquet_part1.zip": "https://zenodo.org/records/XXXXXXX/files/DrugTargetMetrics_parquet_part1.zip?download=1",
-    # "DrugTargetMetrics_parquet_part2.zip": "https://zenodo.org/records/XXXXXXX/files/DrugTargetMetrics_parquet_part2.zip?download=1",
-    # ... (parts 3-10)
+    "Database.zip": f"{_BASE}/Database.zip?download=1",
+    "EHR_Results.zip": f"{_BASE}/EHR_Results.zip?download=1",
+    "DrugResponse.zip": f"{_BASE}/DrugResponse.zip?download=1",
+    "Target_Disease_Association.zip": f"{_BASE}/Target_Disease_Association.zip?download=1",
+    "DrugTargetMetrics_csvs.zip": f"{_BASE}/DrugTargetMetrics_csvs.zip?download=1",
+    "DrugTargetMetrics_parquet_part1.zip": f"{_BASE}/DrugTargetMetrics_parquet_part1.zip?download=1",
+    "DrugTargetMetrics_parquet_part2.zip": f"{_BASE}/DrugTargetMetrics_parquet_part2.zip?download=1",
+    "DrugTargetMetrics_parquet_part3.zip": f"{_BASE}/DrugTargetMetrics_parquet_part3.zip?download=1",
+    "DrugTargetMetrics_parquet_part4.zip": f"{_BASE}/DrugTargetMetrics_parquet_part4.zip?download=1",
+    "DrugTargetMetrics_parquet_part5.zip": f"{_BASE}/DrugTargetMetrics_parquet_part5.zip?download=1",
+    "DrugTargetMetrics_parquet_part6.zip": f"{_BASE}/DrugTargetMetrics_parquet_part6.zip?download=1",
+    "DrugTargetMetrics_parquet_part7.zip": f"{_BASE}/DrugTargetMetrics_parquet_part7.zip?download=1",
+    "DrugTargetMetrics_parquet_part8.zip": f"{_BASE}/DrugTargetMetrics_parquet_part8.zip?download=1",
+    "DrugTargetMetrics_parquet_part9.zip": f"{_BASE}/DrugTargetMetrics_parquet_part9.zip?download=1",
+    "DrugTargetMetrics_parquet_part10.zip": f"{_BASE}/DrugTargetMetrics_parquet_part10.zip?download=1",
 }
 
 

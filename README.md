@@ -6,7 +6,7 @@ LinkD is an integrated platform that combines drug-target interaction binding af
 
 > **URL**: [https://linkd-agent.onrender.com](https://linkd-agent.onrender.com) *(available after deployment)*
 >
-> **Data**: [Zenodo DOI: TBD](https://zenodo.org) (~16 GB)
+> **Data**: [Zenodo DOI: [10.5281/zenodo.19241152](https://doi.org/10.5281/zenodo.19241152)](https://doi.org/10.5281/zenodo.19241152) (~16 GB)
 
 ## Modules
 
@@ -101,7 +101,7 @@ python scripts/download_data.py
    bash scripts/prepare_figshare.sh
    # Creates 15 zip files in figshare_upload/ (~1.3 GB each max)
    ```
-2. Go to https://zenodo.org → New Upload
+2. Go to https://doi.org/10.5281/zenodo.19241152 → New Upload
 3. Upload all zip files from `figshare_upload/`
    - Zenodo allows up to 50 GB per record (no per-file limit issue)
 4. Fill metadata:

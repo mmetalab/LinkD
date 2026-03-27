@@ -56,7 +56,13 @@ def download_file(url: str, dest: str):
 
 
 def main():
-    data_dir = Path(os.getenv("DATABASE_DIR", "data"))
+    # DATABASE_DIR points to .../data/Database, but data root is its parent
+    db_dir = Path(os.getenv("DATABASE_DIR", "data"))
+    # If DATABASE_DIR ends with /Database, use its parent as data root
+    if db_dir.name == "Database":
+        data_dir = db_dir.parent
+    else:
+        data_dir = db_dir
 
     # Check if data already exists
     required_dirs = ["Database", "EHR_Results", "DrugResponse", "DrugTargetMetrics", "Target_Disease_Association"]

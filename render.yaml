@@ -13,7 +13,7 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: DATABASE_DIR
-        value: /opt/render/project/src/data
+        value: /opt/render/project/src/data/Database
       - key: PYTHON_VERSION
         value: "3.12.7"
       - key: NODE_VERSION

@@ -25,12 +25,9 @@ print("Loading database...")
 # DATABASE_DIR env var allows overriding the data location (e.g., on Render with persistent disk)
 _db_dir = os.getenv("DATABASE_DIR", str(project_root / "Database"))
 print(f"DATABASE_DIR = {_db_dir}")
-print(f"  exists: {Path(_db_dir).exists()}")
-print(f"  parent: {Path(_db_dir).parent}")
-print(f"  parent contents: {list(Path(_db_dir).parent.iterdir()) if Path(_db_dir).parent.exists() else 'NOT FOUND'}")
 # load_full_data=False samples large files (>200MB) to 100K rows for fast startup
 db = load_database(_db_dir, load_full_data=False)
-print(f"Database loaded: {len(db.dfs)} datasets")
+print(f"Database loaded: {len(db.dfs)} datasets, keys: {list(db.dfs.keys())}")
 
 # Data version tracking
 from datetime import datetime as _dt
@@ -146,10 +143,18 @@ def precompute_overview() -> dict:
 
 
 def df_to_records(df: pd.DataFrame, max_rows: int = 200) -> List[dict]:
-    """Convert DataFrame to list of dicts, with NaN → None."""
+    """Convert DataFrame to list of dicts, with NaN/inf → None for JSON safety."""
     if df is None or df.empty:
         return []
-    return df.head(max_rows).where(df.notna(), None).to_dict(orient="records")
+    import math
+    sliced = df.head(max_rows)
+    records = sliced.to_dict(orient="records")
+    # Replace NaN/inf with None for JSON serialization
+    for row in records:
+        for k, v in row.items():
+            if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+                row[k] = None
+    return records
 
 
 # ============================================================

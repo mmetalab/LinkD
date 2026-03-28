@@ -24,9 +24,11 @@ def ehr_preload(
     import pandas as _pd
 
     # --- Build combined DataFrame ---
+    print(f"EHR preload: db has {len(db.dfs)} datasets, keys: {list(db.dfs.keys())}")
     frames = []
     if source in ("Both", "Mount Sinai"):
         ms = db.dfs.get("ehr_mount_sinai")
+        print(f"  ehr_mount_sinai: {'found, ' + str(len(ms)) + ' rows' if ms is not None else 'NOT FOUND'}")
         if ms is not None and not ms.empty:
             msc = ms.copy()
             msc["Source"] = "Mount Sinai"
@@ -117,9 +119,12 @@ def ehr_preload(
         fdf = combined.dropna(subset=["Odds Ratio", "P-Value"]).head(200)
         for _, row in fdf.iterrows():
             pval = row["P-Value"]
-            neg_log_p = -math.log10(pval) if pval and pval > 0 else 0
+            or_val = row["Odds Ratio"]
+            if not isinstance(or_val, (int, float)) or math.isnan(or_val) or math.isinf(or_val):
+                continue
+            neg_log_p = -math.log10(pval) if isinstance(pval, (int, float)) and pval > 0 and not math.isnan(pval) else 0
             forest.append({
-                "or_value": float(row["Odds Ratio"]),
+                "or_value": round(float(or_val), 4),
                 "neg_log_p": round(neg_log_p, 2),
                 "drug_name": str(row.get("Drug Name", "")),
                 "disease": str(row.get("Disease Description", ""))[:40],
@@ -130,8 +135,11 @@ def ehr_preload(
         # Fallback if no P-Value (UK Biobank)
         fdf = combined.dropna(subset=["Odds Ratio"]).head(50)
         for _, row in fdf.iterrows():
+            or_val = row["Odds Ratio"]
+            if not isinstance(or_val, (int, float)) or math.isnan(or_val) or math.isinf(or_val):
+                continue
             forest.append({
-                "or_value": float(row["Odds Ratio"]),
+                "or_value": round(float(or_val), 4),
                 "neg_log_p": 0,
                 "drug_name": str(row.get("Drug Name", "")),
                 "disease": str(row.get("Disease Description", ""))[:40],

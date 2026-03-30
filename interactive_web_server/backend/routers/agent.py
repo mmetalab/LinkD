@@ -11,28 +11,56 @@ router = APIRouter()
 
 
 def _format_result(result) -> str:
-    """Format step result into readable text instead of raw dict dump."""
+    """Format step result into readable text with actual data."""
     import pandas as pd
     if result is None:
         return "No data returned."
     if isinstance(result, pd.DataFrame):
         n = len(result)
-        cols = list(result.columns)
-        preview = ", ".join(cols[:5])
-        return f"Found {n} records ({preview}{'...' if len(cols) > 5 else ''})"
+        # Show top drug/gene names if available
+        names = []
+        for col in ["Drug Name", "Drug Chembl ID", "Gene", "Disease Description"]:
+            if col in result.columns:
+                top = result[col].dropna().unique()[:5]
+                if len(top) > 0:
+                    names.append(f"{col}: {', '.join(str(x) for x in top)}")
+        preview = "; ".join(names) if names else ", ".join(list(result.columns)[:5])
+        return f"Found {n} records. {preview}"
     if isinstance(result, dict):
         parts = []
         for k, v in result.items():
             if isinstance(v, pd.DataFrame):
-                parts.append(f"{k}: {len(v)} records")
-            elif isinstance(v, dict):
-                # Summarize nested dict (e.g., target_binding_stats)
-                summary_keys = [sk for sk in v if isinstance(v[sk], (int, float, str)) and sk not in ('Sequence', 'Entry', 'Entry Name')]
-                items = [f"{sk}: {v[sk]}" for sk in summary_keys[:6]]
-                if items:
-                    parts.append(f"{k}: {', '.join(items)}")
+                n = len(v)
+                # Extract actual names
+                drug_names = []
+                for col in ["Drug Name", "Drug Chembl ID"]:
+                    if col in v.columns:
+                        drug_names = v[col].dropna().unique()[:5].tolist()
+                        break
+                if drug_names:
+                    parts.append(f"{k}: {n} records — {', '.join(str(x) for x in drug_names)}")
                 else:
-                    parts.append(f"{k}: found")
+                    parts.append(f"{k}: {n} records")
+            elif isinstance(v, dict):
+                if "data" in v and isinstance(v["data"], list) and len(v["data"]) > 0:
+                    # Show actual drug names from data
+                    names = []
+                    for row in v["data"][:5]:
+                        name = row.get("Drug Name") or row.get("drugId") or row.get("Drug Chembl ID", "")
+                        if name:
+                            names.append(str(name))
+                    count = v.get("count", len(v["data"]))
+                    if names:
+                        parts.append(f"{k}: {count} records — {', '.join(names)}")
+                    else:
+                        parts.append(f"{k}: {count} records")
+                else:
+                    summary_keys = [sk for sk in v if isinstance(v[sk], (int, float, str)) and sk not in ('Sequence', 'Entry', 'Entry Name')]
+                    items = [f"{sk}: {v[sk]}" for sk in summary_keys[:6]]
+                    if items:
+                        parts.append(f"{k}: {', '.join(items)}")
+                    else:
+                        parts.append(f"{k}: found")
             elif isinstance(v, list):
                 parts.append(f"{k}: {len(v)} items")
             elif isinstance(v, (int, float)):

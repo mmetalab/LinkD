@@ -123,9 +123,9 @@ def get_examples():
             {"label": "Melanoma (MS)", "drug_id": "", "drug_name": "", "icd_code": "", "disease_name": "melanoma", "source": "Mount Sinai"},
         ],
         "agent": [
+            {"label": "Lung Cancer Repurposing", "query": "Find all drugs on target or those that can be repurposed for lung cancer"},
             {"label": "Vemurafenib-BRAF Evidence", "query": "How strong is the evidence that vemurafenib binds to BRAF, and does real-world clinical data support this interaction?"},
             {"label": "EGFR Target Landscape", "query": "Which drugs most potently target EGFR, and how does EGFR rank among druggable oncology targets?"},
-            {"label": "Erlotinib Repurposing", "query": "Could erlotinib be repurposed for diseases beyond its current indications?"},
             {"label": "BRAF Melanoma Therapies", "query": "What therapeutic options exist for melanoma patients through BRAF-targeted drugs?"},
         ],
     }

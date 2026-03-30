@@ -96,44 +96,7 @@ export default function Documentation() {
         ))}
       </div>
 
-      {/* Comparison with existing tools */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm mb-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Comparison with Existing Tools</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs border-collapse">
-            <thead>
-              <tr className="bg-gray-100 border-b-2 border-gray-300">
-                <th className="px-3 py-2 text-left font-semibold">Feature</th>
-                <th className="px-3 py-2 text-center font-semibold">LinkD Agent</th>
-                <th className="px-3 py-2 text-center font-semibold">Open Targets</th>
-                <th className="px-3 py-2 text-center font-semibold">DrugBank</th>
-                <th className="px-3 py-2 text-center font-semibold">STRING-db</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                ['Drug-target binding affinity (pKd)', '✅', '❌', '⚠️ Limited', '❌'],
-                ['Drug selectivity profiles (UMAP)', '✅', '❌', '❌', '❌'],
-                ['EHR drug-disease associations', '✅', '❌', '❌', '❌'],
-                ['CRISPR drug response correlation', '✅', '❌', '❌', '❌'],
-                ['Multi-source evidence aggregation', '✅', '⚠️ Partial', '❌', '❌'],
-                ['AI-powered natural language analysis', '✅', '❌', '❌', '❌'],
-                ['Clinical trial phases', '✅', '✅', '✅', '❌'],
-                ['Protein-protein interactions', '❌', '⚠️ Partial', '❌', '✅'],
-                ['Drug structures / chemistry', '❌', '❌', '✅', '❌'],
-                ['Genetic associations (GWAS)', '❌', '✅', '❌', '❌'],
-              ].map((row, i) => (
-                <tr key={i} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                  {row.map((cell, j) => (
-                    <td key={j} className={`px-3 py-1.5 ${j === 0 ? 'text-left font-medium' : 'text-center'}`}>{cell}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-gray-400 mt-2">LinkD Agent uniquely combines binding affinity, EHR, and CRISPR data with AI-powered multi-step analysis — a combination not available in any existing tool.</p>
-      </div>
+
 
       {/* Glossary */}
       <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm mb-6">
@@ -148,18 +111,6 @@ export default function Documentation() {
         </div>
       </div>
 
-      {/* API */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
-        <h3 className="text-lg font-bold text-gray-800 mb-3">API Reference</h3>
-        <p className="text-xs text-gray-600 mb-2">
-          All data is accessible via REST API. The interactive API documentation (Swagger UI) is available at:
-        </p>
-        <a href="/api/docs" target="_blank" rel="noopener noreferrer"
-          className="inline-block px-4 py-2 bg-gray-100 rounded border border-gray-300 text-sm font-medium hover:bg-gray-200 transition-colors"
-          style={{ color: COLORS.primary }}>
-          Open API Docs →
-        </a>
-      </div>
     </div>
   );
 }

@@ -3,9 +3,24 @@ import { initAgent, generatePlan, executePlan, fetchProviders, fetchExamples, fe
 
 function mdToHtml(text: string): string {
   return text
+    // Headings (### before ## before #)
+    .replace(/^### (.+)$/gm, '<h4 style="margin:12px 0 6px;color:#2171B5;font-size:14px;font-weight:600">$1</h4>')
+    .replace(/^## (.+)$/gm, '<h3 style="margin:14px 0 8px;color:#2171B5;font-size:15px;font-weight:700">$1</h3>')
+    .replace(/^# (.+)$/gm, '<h2 style="margin:16px 0 10px;color:#2171B5;font-size:17px;font-weight:700">$1</h2>')
+    // Horizontal rule
+    .replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid #e0e0e0;margin:12px 0">')
+    // Blockquotes
+    .replace(/^>\s?(.+)$/gm, '<blockquote style="border-left:3px solid #6BAED6;padding-left:10px;margin:8px 0;color:#555;font-style:italic">$1</blockquote>')
+    // Bold + italic
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Bullet points: * at start of line → list item (before italic conversion)
+    .replace(/^\* (.+)$/gm, '<li style="margin:2px 0;margin-left:16px">$1</li>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/^(\d+)\.\s/gm, '<br>$1. ')
+    // Unordered lists: - at start of line
+    .replace(/^- (.+)$/gm, '<li style="margin:2px 0;margin-left:16px">$1</li>')
+    // Numbered lists
+    .replace(/^(\d+)\.\s(.+)$/gm, '<li style="margin:2px 0;margin-left:16px"><strong>$1.</strong> $2</li>')
+    // Paragraphs
     .replace(/\n\n/g, '<br><br>')
     .replace(/\n/g, '<br>');
 }

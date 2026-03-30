@@ -233,12 +233,6 @@ Interactive API docs: `http://localhost:8000/docs` (Swagger UI)
 | Parquet queries slow | Ensure `drug_index.json` and `target_index.json` exist |
 | EHR 500 error | Check for duplicate columns — fixed in latest version |
 
-## Citation
-
-> LinkD: A Multi-Evidence Supported Drug Discovery Platform. *Nucleic Acids Research* (submitted).
->
-> [Citation details TBD upon publication]
-
 ## License
 
 MIT License. Source code and data processing pipelines are freely available for academic use.
@@ -247,4 +241,4 @@ MIT License. Source code and data processing pipelines are freely available for 
 
 - **Institution**: Icahn School of Medicine at Mount Sinai
 - **Email**: cheng.wang@mssm.edu
-- **GitHub**: [Report issues](https://github.com/)
+- **GitHub**: [github.com/mmetalab/LinkD](https://github.com/mmetalab/LinkD)

@@ -10,7 +10,7 @@ export default function EHR() {
   const [data, setData] = useState<any>(null);
   const [page, setPage] = useState(1);
   const [source, setSource] = useState('Both');
-  const [icdPrefix, setIcdPrefix] = useState('C'); // default: cancer
+  const [icdPrefix] = useState('C'); // cancer only
   const [atcCategory, setAtcCategory] = useState('');
   const [drugFilter, setDrugFilter] = useState('');
   const [diseaseFilter, setDiseaseFilter] = useState('');
@@ -25,12 +25,6 @@ export default function EHR() {
   const applyFilters = () => { setPage(1); loadData(1, source, icdPrefix, atcCategory, drugFilter, diseaseFilter); };
   const onPageChange = (p: number) => { setPage(p); loadData(p, source, icdPrefix, atcCategory, drugFilter, diseaseFilter); };
 
-  const selectDiseaseCategory = (prefix: string) => {
-    const newPrefix = prefix === icdPrefix ? '' : prefix; // toggle
-    setIcdPrefix(newPrefix);
-    setPage(1);
-    loadData(1, source, newPrefix, atcCategory, drugFilter, diseaseFilter);
-  };
 
   const selectDrugCategory = (cat: string) => {
     const newCat = cat === atcCategory ? '' : cat; // toggle
@@ -43,16 +37,15 @@ export default function EHR() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-gray-800 mb-2">LinkD-Pheno: Phenotype-Drug Associations</h2>
+      <h2 className="text-xl font-bold text-gray-800 mb-2">LinkD-Pheno: Cancer Drug-Disease Associations</h2>
       <p className="text-sm text-gray-500 mb-1">
-        Real-world drug-disease associations from Mount Sinai and UK Biobank EHR data.
+        Real-world cancer drug-disease associations from Mount Sinai (11.5M individuals) and UK Biobank (500K participants) EHR data.
         OR &lt; 1 = protective, OR &gt; 1 = risk-increasing.
       </p>
       {data && (
         <p className="text-xs text-gray-400 mb-4">
-          Showing {data.total?.toLocaleString()} deduplicated associations
+          Showing {data.total?.toLocaleString()} deduplicated cancer associations
           {data.total_raw ? ` (from ${data.total_raw.toLocaleString()} raw records)` : ''}
-          {icdPrefix ? ` — filtered to ${icdPrefix}-prefix diseases` : ''}
         </p>
       )}
 
@@ -65,25 +58,6 @@ export default function EHR() {
           </button>
         ))}
       </div>
-
-      {/* Disease category panel */}
-      {data?.disease_categories?.length > 0 && (
-        <div className="bg-white rounded-lg border border-gray-200 p-3 mb-3 shadow-sm">
-          <div className="text-xs font-semibold text-gray-600 mb-2">Disease Category (ICD-10)</div>
-          <div className="flex flex-wrap gap-1.5">
-            <button onClick={() => selectDiseaseCategory('')}
-              className={`px-3 py-1 text-xs rounded-full border transition-colors ${!icdPrefix ? 'bg-[#2171B5] text-white border-[#2171B5]' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'}`}>
-              All
-            </button>
-            {data.disease_categories.map((c: any) => (
-              <button key={c.prefix} onClick={() => selectDiseaseCategory(c.prefix)}
-                className={`px-3 py-1 text-xs rounded-full border transition-colors ${icdPrefix === c.prefix ? 'bg-[#2171B5] text-white border-[#2171B5]' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'}`}>
-                {c.label} ({c.count.toLocaleString()})
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Drug category panel */}
       {data?.drug_categories?.length > 0 && (

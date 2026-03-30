@@ -33,15 +33,22 @@ export default function About() {
       {/* Overview */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm mb-6">
         <p className="text-sm text-gray-600 leading-relaxed mb-4">
-          <strong>LinkD Agent</strong> is an integrated drug discovery intelligence platform that combines
-          multiple biomedical data sources — drug-target binding affinity, electronic health records, CRISPR
-          drug response screens, and clinical trial data — into a unified queryable system with AI-powered
-          natural language analysis.
+          <strong>LinkD</strong> is an agentic cancer drug discovery platform that bridges the gap between
+          target-centric and phenotype-driven computational approaches. Conventional methods either predict
+          drug-target interactions in isolation — missing the broader selectivity landscape across the
+          proteome — or leverage phenotypic screens without mechanistic resolution to specific molecular targets.
+        </p>
+        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+          LinkD addresses these limitations by integrating drug-target binding affinity and selectivity metrics
+          across the druggable proteome, CRISPR-based genetic dependency maps (PRISM, GDSC) linking functional
+          drug response to gene knockouts, and population-scale electronic health record associations from
+          Mount Sinai (11.5M individuals) and UK Biobank (500K participants) for real-world clinical validation.
         </p>
         <p className="text-sm text-gray-600 leading-relaxed">
-          The platform enables researchers to explore drug-disease-target relationships through interactive
-          visualizations and an LLM-powered agent that can break complex biomedical questions into multi-step
-          analysis plans, automatically querying across all evidence sources and synthesizing findings.
+          An AI-powered agent (LinkD-Agent) enables researchers to query across all evidence sources using
+          natural language, automatically decomposing complex biomedical questions into multi-step analysis
+          plans that systematically retrieve, integrate, and synthesize findings from binding affinity,
+          drug response, and EHR data to support drug repurposing decisions.
         </p>
       </div>
 
@@ -50,16 +57,16 @@ export default function About() {
         <h3 className="text-lg font-bold text-gray-800 mb-3">Method Overview</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h4 className="text-sm font-semibold mb-2" style={{ color: COLORS.primary }}>1. Data Integration</h4>
-            <p className="text-xs text-gray-600">Six data sources are loaded and indexed at startup. Parquet files use pre-built indexes for sub-second binding affinity lookups across 20K+ targets.</p>
+            <h4 className="text-sm font-semibold mb-2" style={{ color: COLORS.primary }}>1. Target-Centric Evidence</h4>
+            <p className="text-xs text-gray-600">Drug-target binding affinities (pKd) and selectivity landscapes across the druggable proteome, capturing a compound's distribution of affinities — critical for anticipating both therapeutic efficacy and off-target liabilities.</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h4 className="text-sm font-semibold mb-2" style={{ color: COLORS.primary }}>2. Evidence Aggregation</h4>
-            <p className="text-xs text-gray-600">For any drug-target pair, evidence is assessed across binding affinity, drug response, target statistics, and selectivity. Strength is scored as strong (3+ sources), moderate (2), or weak (1).</p>
+            <h4 className="text-sm font-semibold mb-2" style={{ color: COLORS.primary }}>2. Phenotype-Driven Evidence</h4>
+            <p className="text-xs text-gray-600">CRISPR-based genetic dependency screens (PRISM, GDSC) linking gene knockouts to drug sensitivity, and population-scale EHR associations from two independent cohorts validating drug-disease relationships with odds ratios and propensity score matching.</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <h4 className="text-sm font-semibold mb-2" style={{ color: COLORS.primary }}>3. AI Analysis</h4>
-            <p className="text-xs text-gray-600">An LLM agent (OpenAI, Gemini, or Claude) decomposes natural language queries into executable analysis plans, runs each step against the database, and produces a synthesis report.</p>
+            <h4 className="text-sm font-semibold mb-2" style={{ color: COLORS.primary }}>3. AI-Powered Integration</h4>
+            <p className="text-xs text-gray-600">An LLM agent decomposes natural language queries into multi-step analysis plans, systematically querying binding, selectivity, drug response, and EHR data sources, then synthesizing multi-evidence findings for drug repurposing assessment.</p>
           </div>
         </div>
       </div>
@@ -96,7 +103,7 @@ export default function About() {
         <div className="space-y-2 text-sm text-gray-600">
           <p><strong>Institution:</strong> Icahn School of Medicine at Mount Sinai</p>
           <p><strong>Email:</strong> <a href="mailto:cheng.wang@mssm.edu" className="text-[#2171B5] hover:underline">cheng.wang@mssm.edu</a></p>
-          <p><strong>GitHub:</strong> <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="text-[#2171B5] hover:underline">Report issues or request features</a></p>
+          <p><strong>GitHub:</strong> <a href="https://github.com/mmetalab/LinkD" target="_blank" rel="noopener noreferrer" className="text-[#2171B5] hover:underline">github.com/mmetalab/LinkD</a></p>
           <p><strong>Hosting:</strong> This web server is maintained and will remain accessible for at least 5 years following publication.</p>
         </div>
       </div>
